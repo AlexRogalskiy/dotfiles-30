@@ -1,0 +1,47 @@
+# most video files
+*.avi
+*.gpg
+*.mkv
+*.mp4
+*.wmv
+*.flv
+*.webm
+
+# jetbrains products
+**system/caches*
+**system/index*
+
+# anything called cache
+cache
+Cache
+*-cache
+*_cache
+
+# xdg directories
+.cache
+.local
+
+
+# caches/stores for 3rd party apps
+.dropbox
+.dropbox.cache
+.gem
+.git
+.gradle
+.nave
+.npm
+.nuget
+.nvm
+.PlayOnLinux
+.svn
+.technic
+.virtualenvs
+.wine
+node_modules
+*.cache
+
+
+# other directories
+Qt
+Downloads
+Games

@@ -1,0 +1,8 @@
+[user]
+    signingkey = FFD32695EA0078DA
+    email = joshua@richardson.tech
+    name = Joshua Richardson
+[commit]
+    gpgsign = true
+[core]
+    excludesfile = ~/.gitignore_global

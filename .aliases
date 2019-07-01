@@ -1,0 +1,23 @@
+
+
+alias gcm="git commit -m"
+alias gp="git push"
+alias gl="git pull"
+alias gpo="git push origin"
+alias gcp="git checkout -b"
+
+alias scalescreen="xrandr --output DP1 --scale 0.85x0.85"
+alias fixmouse="sudo modprobe -r rmi_smbus;sudo modprobe rmi_smbus"
+alias runescape="env "LD_PRELOAD=libcurl.so.3" nxtlauncher"
+alias fixdns='sudo sh -c "printf \"nameserver 1.1.1.1\" > /etc/resolv.conf"'
+alias ccat='highlight -O ansi --force'
+alias cpb='rsync -aP'
+alias mpv='mpv --player-operation-mode=cplayer'
+alias nano='vim'
+alias path='echo -e ${PATH//:/\\n}'
+alias pstree='ps xawf'
+alias mv='mv -i -v'
+alias cp='cp -i -v'
+alias mkdir='mkdir -p -v'
+alias printip="dig +short myip.opendns.com @resolver1.opendns.com"
+
