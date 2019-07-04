@@ -48,7 +48,7 @@ setopt appendhistory
 setopt histignorealldups     
 setopt autocd
 zstyle ':completion:*' rehash true
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+#zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 # Local mailservers are unlikely to be prod, don't annoy
 unset MAILCHECK
 
