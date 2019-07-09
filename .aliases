@@ -15,9 +15,9 @@ alias cpb='rsync -aP'
 alias mpv='mpv --player-operation-mode=cplayer'
 alias nano='vim'
 alias path='echo -e ${PATH//:/\\n}'
-alias pstree='ps xawf'
+#alias pstree='ps xawf'
 alias mv='mv -i -v'
 alias cp='cp -i -v'
 alias mkdir='mkdir -p -v'
 alias printip="dig +short myip.opendns.com @resolver1.opendns.com"
-
+alias pubkey='cat ~/.ssh/id_rsa.pub | xsel --clipboard --input'
