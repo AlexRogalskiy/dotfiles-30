@@ -21,3 +21,5 @@ alias cp='cp -i -v'
 alias mkdir='mkdir -p -v'
 alias printip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias pubkey='cat ~/.ssh/id_rsa.pub | xsel --clipboard --input'
+alias term='xfce4-terminal --default-working-directory=`pwd`'
+alias cpwd='printf $(pwd) | xsel --clipboard --input'
