@@ -23,3 +23,5 @@ alias printip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias pubkey='cat ~/.ssh/id_rsa.pub | xsel --clipboard --input'
 alias term='xfce4-terminal --default-working-directory=`pwd`'
 alias cpwd='printf $(pwd) | xsel --clipboard --input'
+alias cpy='xsel --clipboard --input'
+alias pst='xsel --clipboard --output'

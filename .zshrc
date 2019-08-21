@@ -1,7 +1,7 @@
 # Things upon which things depend
 export WORKON_HOME=~/.virtualenvs
 export EDITOR=`which vim`
-export BROWSER=`which firefox`
+export BROWSER=`which firefox-developer-edition`
 
 
 # Shell customization
@@ -109,3 +109,6 @@ export LESS_TERMCAP_so=$'\E[01;47;34m'
 export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;36m'
 export LESS=-r
+
+
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}" 2> /dev/null'
