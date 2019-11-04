@@ -25,10 +25,10 @@ export PATH=$PATH:$HOME/.bin
 
 
 # Load aliases
-source ~/.aliases
+[ -s ~/.aliases ] && source ~/.aliases
 
 # Load secrets
-source ~/.secrets
+[ -s ~/.secrets ] && source ~/.secrets
 
 # Save lots of history
 HISTSIZE=10000               
@@ -77,7 +77,7 @@ gi() {
 
 
 # Java version manager
-[ -s "/home/joshua/.jabba/jabba.sh" ] && source "/home/joshua/.jabba/jabba.sh"
+[ -s "~/.jabba/jabba.sh" ] && source "~/.jabba/jabba.sh"
 
 
 # Don't scale qt please
