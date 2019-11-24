@@ -75,9 +75,10 @@ gi() {
 	curl -s "https://www.gitignore.io/api/$*"
 }
 
+function goto() { cd $(dirname $1) }
 
 # Java version manager
-[ -s "~/.jabba/jabba.sh" ] && source "~/.jabba/jabba.sh"
+[ -s ~/.jabba/jabba.sh ] && source ~/.jabba/jabba.sh
 
 
 # Don't scale qt please
@@ -112,3 +113,5 @@ export LESS=-r
 
 
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}" 2> /dev/null'
+
+[ -s ~/.web3j/source.sh ] && source ~/.web3j/source.sh
