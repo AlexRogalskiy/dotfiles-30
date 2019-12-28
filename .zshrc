@@ -21,7 +21,7 @@ export ANDROID_HOME=${HOME}/.android/Sdk
 export DOTNET_ROOT=/opt/dotnet/
 export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
 export GOPATH=$HOME/.go
-export PATH=$PATH:$HOME/.bin
+export PATH=$HOME/.bin:$PATH
 
 
 # Load aliases
@@ -114,4 +114,7 @@ export LESS=-r
 
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}" 2> /dev/null'
 
-[ -s ~/.web3j/source.sh ] && source ~/.web3j/source.sh
+
+eval $(thefuck --alias)
+
+[ -s "/home/joshua/.web3j/source.sh" ] && source "/home/joshua/.web3j/source.sh"
