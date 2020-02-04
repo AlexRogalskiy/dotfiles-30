@@ -111,10 +111,14 @@ export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;36m'
 export LESS=-r
 
-
+# fzf default ignore generated dirs
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}" 2> /dev/null'
 
-
+# initialize thefuck to help with common mistakes
 eval $(thefuck --alias)
 
-[ -s "/home/joshua/.web3j/source.sh" ] && source "/home/joshua/.web3j/source.sh"
+# web3j cli
+[ -s "$HOME/.web3j/source.sh" ] && source "$HOME/.web3j/source.sh"
+
+# solidity version manager
+[ -s "$HOME/.svm/svm.sh" ] && source "$HOME/.svm/svm.sh"
