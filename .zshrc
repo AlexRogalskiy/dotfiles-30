@@ -15,13 +15,19 @@ antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle zsh-users/zsh-autosuggestions
 antigen apply
 
-# SDK homes, etc
-export NODE_REPL_HISTORY=$HOME/.node_history
-export ANDROID_HOME=${HOME}/.android/Sdk
-export DOTNET_ROOT=/opt/dotnet/
-export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
-export GOPATH=$HOME/.go
-export PATH=$HOME/.bin:$PATH
+
+
+# Manual SDK homes
+if [[ -d "$HOME/.android" ]]
+then
+	export ANDROID_HOME=${HOME}/.android/Sdk
+	export PATH="$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools"
+fi
+
+[ -d "$HOME/.bin" ] && export PATH="$HOME/.bin:$PATH"
+[ -d "$HOME/.bin/jetbrains" ] && export PATH="$PATH:$HOME/.bin/jetbrains"
+[ -d "$HOME/.go" ] && export GOPATH="$HOME/.go"
+[ -d "/opt/dotnet" ] && export DOTNET_ROOT=/opt/dotnet/
 
 
 # Load aliases
@@ -48,9 +54,9 @@ setopt appendhistory
 setopt histignorealldups     
 setopt autocd
 zstyle ':completion:*' rehash true
-#zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 # Local mailservers are unlikely to be prod, don't annoy
 unset MAILCHECK
+
 
 
 # Unix timestamp to readable date
@@ -77,9 +83,6 @@ gi() {
 
 function goto() { cd $(dirname $1) }
 
-# Java version manager
-[ -s ~/.jabba/jabba.sh ] && source ~/.jabba/jabba.sh
-
 
 # Don't scale qt please
 export QT_AUTO_SCREEN_SCALE_FACTOR=0
@@ -87,19 +90,6 @@ export QT_STYLE_OVERRIDE=gtk
 export QT_SELECT=qt5
 export QT_SCALE_FACTOR=1
 export QT_AUTO
-
-# Set locale if unset
-if [[ $LANG = '' ]]; then
-	export LANG=en_US.UTF-8
-fi
-
-# Fix jetbrains history bug
-unset __INTELLIJ_COMMAND_HISTFILE__
-
-# Fast node manager
-export PATH=/home/joshua/.fnm:$PATH
-eval "`fnm env --multi`"
-
 
 # Color man pages
 export LESS_TERMCAP_mb=$'\E[01;32m'
@@ -114,11 +104,37 @@ export LESS=-r
 # fzf default ignore generated dirs
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}" 2> /dev/null'
 
-# initialize thefuck to help with common mistakes
-eval $(thefuck --alias)
+# Set locale if unset
+if [[ $LANG = '' ]]; then
+	export LANG=en_GB.UTF-8
+fi
 
-# web3j cli
+# Fix jetbrains history bug
+unset __INTELLIJ_COMMAND_HISTFILE__
+
+
+
+
+
+# Initialize nodeJS
+if [[ -d "~/.fnm" ]]
+then
+	export PATH="$HOME/.fnm:$PATH"
+	eval "`fnm env --multi`"
+	export NODE_REPL_HISTORY="$HOME/.node_history"
+fi
+
+# Initialize Java
+[ -s "$HOME/.jabba/jabba.sh" ] && source "$HOME/.jabba/jabba.sh"
+
+# Initialize Web3j
 [ -s "$HOME/.web3j/source.sh" ] && source "$HOME/.web3j/source.sh"
 
-# solidity version manager
+# Initialize Solidity
 [ -s "$HOME/.svm/svm.sh" ] && source "$HOME/.svm/svm.sh"
+
+# Initialize thefuck to help with common mistakes
+eval $(thefuck --alias)
+
+# ensure that on gnome terminals open to the same location as their parent
+[ -z "GNOME_TERMINAL_SERVICE" ] || source "/etc/profile.d/vte.sh"
