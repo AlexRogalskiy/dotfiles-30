@@ -1,6 +1,7 @@
 # Things upon which things depend
 export WORKON_HOME=~/.virtualenvs
-export EDITOR=`which vim`
+export EDITOR="vim"
+export PAGER="less"
 export BROWSER=`which firefox-developer-edition`
 
 
@@ -18,23 +19,23 @@ antigen apply
 
 
 # Manual SDK homes
-if [[ -d "$HOME/.android" ]]
+if [[ -d ~/.android ]]
 then
-	export ANDROID_HOME=${HOME}/.android/Sdk
+	export ANDROID_HOME=${HOME}/.android/
 	export PATH="$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools"
 fi
 
-[ -d "$HOME/.bin" ] && export PATH="$HOME/.bin:$PATH"
-[ -d "$HOME/.bin/jetbrains" ] && export PATH="$PATH:$HOME/.bin/jetbrains"
-[ -d "$HOME/.go" ] && export GOPATH="$HOME/.go"
-[ -d "/opt/dotnet" ] && export DOTNET_ROOT=/opt/dotnet/
+[ -d ~/.bin ] && export PATH="$HOME/.bin:$PATH"
+[ -d ~/.bin/jetbrains ] && export PATH="$PATH:$HOME/.bin/jetbrains"
+[ -d ~/.go ] && export GOPATH="$HOME/.go"
+[ -d /opt/dotnet ] && export DOTNET_ROOT="/opt/dotnet/"
 
 
 # Load aliases
-[ -s ~/.aliases ] && source ~/.aliases
+[ -s ~/dotfiles/.aliases ] && source ~/dotfiles/.aliases
 
 # Load secrets
-[ -s ~/.secrets ] && source ~/.secrets
+[ -s ~/dotfiles/.secrets ] && source ~/dotfiles/.secrets
 
 # Save lots of history
 HISTSIZE=10000               
@@ -66,7 +67,7 @@ function ttd {
 
 # Temporary scratch dir
 function tempe () {
-  cd "$(mktemp -d)"
+  cd "$(mktemp -d /tmp/$(shuf -n 1 ~/dotfiles/wordlist).XXXX)"
   if [[ $# -eq 1 ]]; then
     \mkdir -p "$1"
     cd "$1"
@@ -74,7 +75,7 @@ function tempe () {
 }
 
 # Upload from CLI
-function transfer() { curl --progress-bar --upload-file "$1" https://transfer.sh/$1 && printf "\n"}
+function transfer() { curl --progress-bar --upload-file "$1" https://transfer.sh/$1 && printf "\n" }
 
 # Get me a gitignore
 gi() {
@@ -117,7 +118,7 @@ unset __INTELLIJ_COMMAND_HISTFILE__
 
 
 # Initialize nodeJS
-if [[ -d "~/.fnm" ]]
+if [[ -d ~/.fnm ]]
 then
 	export PATH="$HOME/.fnm:$PATH"
 	eval "`fnm env --multi`"
@@ -125,16 +126,17 @@ then
 fi
 
 # Initialize Java
-[ -s "$HOME/.jabba/jabba.sh" ] && source "$HOME/.jabba/jabba.sh"
+[ -s ~/.jabba/jabba.sh ] && source ~/.jabba/jabba.sh
 
 # Initialize Web3j
-[ -s "$HOME/.web3j/source.sh" ] && source "$HOME/.web3j/source.sh"
+[ -s ~/.web3j/source.sh ] && source ~/.web3j/source.sh
 
 # Initialize Solidity
-[ -s "$HOME/.svm/svm.sh" ] && source "$HOME/.svm/svm.sh"
+[ -s ~/.svm/svm.sh ] && source ~/.svm/svm.sh
 
 # Initialize thefuck to help with common mistakes
 eval $(thefuck --alias)
 
 # ensure that on gnome terminals open to the same location as their parent
 [ -z "GNOME_TERMINAL_SERVICE" ] || source "/etc/profile.d/vte.sh"
+
