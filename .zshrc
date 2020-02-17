@@ -27,7 +27,7 @@ fi
 
 [ -d ~/.bin ] && export PATH="$HOME/.bin:$PATH"
 [ -d ~/.bin/jetbrains ] && export PATH="$PATH:$HOME/.bin/jetbrains"
-[ -d ~/.go ] && export GOPATH="$HOME/.go"
+[ -d ~/go ] && export GOPATH="$HOME/go"
 [ -d /opt/dotnet ] && export DOTNET_ROOT="/opt/dotnet/"
 
 
@@ -67,7 +67,7 @@ function ttd {
 
 # Temporary scratch dir
 function tempe () {
-  cd "$(mktemp -d /tmp/$(shuf -n 1 ~/dotfiles/wordlist).XXXX)"
+  cd "$(mktemp -d /tmp/tmp.$(shuf -n 1 ~/dotfiles/wordlist).XXXX)"
   if [[ $# -eq 1 ]]; then
     \mkdir -p "$1"
     cd "$1"
