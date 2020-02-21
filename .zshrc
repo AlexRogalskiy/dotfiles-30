@@ -1,3 +1,10 @@
+#if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ] && [[ -z "$__INTELLIJ_COMMAND_HISTFILE__" ]]; then
+#	      exec tmux
+#fi
+#zmodload zsh/zprof
+export ZSH_DISABLE_COMPFIX=true
+
+
 # Things upon which things depend
 export WORKON_HOME=~/.virtualenvs
 export EDITOR="vim"
@@ -6,17 +13,10 @@ export BROWSER=`which firefox-developer-edition`
 
 
 # Shell customization
-source ~/.antigen/antigen.zsh
-antigen use oh-my-zsh
-antigen bundle "MichaelAquilina/zsh-you-should-use"
-antigen bundle virtualenvwrapper
-antigen bundle command-not-found
-antigen theme agnoster/agnoster-zsh-theme agnoster
-antigen bundle zsh-users/zsh-syntax-highlighting
-antigen bundle zsh-users/zsh-autosuggestions
-antigen apply
-
-
+ZSH="$(antibody home)/https-COLON--SLASH--SLASH-github.com-SLASH-robbyrussell-SLASH-oh-my-zsh"
+ZSH_THEME="agnoster"
+setopt promptsubst
+source ~/.zsh_plugins.sh
 
 # Manual SDK homes
 if [[ -d ~/.android ]]
@@ -114,9 +114,6 @@ fi
 unset __INTELLIJ_COMMAND_HISTFILE__
 
 
-
-
-
 # Initialize nodeJS
 if [[ -d ~/.fnm ]]
 then
@@ -125,18 +122,20 @@ then
 	export NODE_REPL_HISTORY="$HOME/.node_history"
 fi
 
-# Initialize Java
-[ -s ~/.jabba/jabba.sh ] && source ~/.jabba/jabba.sh
+#Initialize Java
+alias java="unalias java &>/dev/null ; unalias jabba &>/dev/null ; source ~/.jabba/jabba.sh ; java"
+alias jabba="unalias java &>/dev/null ; unalias jabba &>/dev/null ; source ~/.jabba/jabba.sh ; jabba"
 
 # Initialize Web3j
 [ -s ~/.web3j/source.sh ] && source ~/.web3j/source.sh
 
 # Initialize Solidity
-[ -s ~/.svm/svm.sh ] && source ~/.svm/svm.sh
+alias solc="unalias svm &>/dev/null ; unalias solc &>/dev/null ; source ~/.svm/svm.sh ; solc"
+alias svm="unalias svm &>/dev/null ; unalias solc &>/dev/null ; source ~/.svm/svm.sh ; svm"
 
 # Initialize thefuck to help with common mistakes
-eval $(thefuck --alias)
+#eval $(thefuck --alias)
 
 # ensure that on gnome terminals open to the same location as their parent
 [ -z "GNOME_TERMINAL_SERVICE" ] || source "/etc/profile.d/vte.sh"
-
+#zprof
