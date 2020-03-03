@@ -1,34 +1,41 @@
+#if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ] && [[ -z "$__INTELLIJ_COMMAND_HISTFILE__" ]]; then
+#	      exec tmux
+#fi
+#zmodload zsh/zprof
+export ZSH_DISABLE_COMPFIX=true
+
+
 # Things upon which things depend
 export WORKON_HOME=~/.virtualenvs
-export EDITOR=`which vim`
+export EDITOR="vim"
+export PAGER="less"
 export BROWSER=`which firefox-developer-edition`
 
 
 # Shell customization
-source ~/.antigen/antigen.zsh
-antigen use oh-my-zsh
-antigen bundle "MichaelAquilina/zsh-you-should-use"
-antigen bundle virtualenvwrapper
-antigen bundle command-not-found
-antigen theme agnoster/agnoster-zsh-theme agnoster
-antigen bundle zsh-users/zsh-syntax-highlighting
-antigen bundle zsh-users/zsh-autosuggestions
-antigen apply
+ZSH="$(antibody home)/https-COLON--SLASH--SLASH-github.com-SLASH-robbyrussell-SLASH-oh-my-zsh"
+ZSH_THEME="agnoster"
+setopt promptsubst
+source ~/.zsh_plugins.sh
 
-# SDK homes, etc
-export NODE_REPL_HISTORY=$HOME/.node_history
-export ANDROID_HOME=${HOME}/.android/Sdk
-export DOTNET_ROOT=/opt/dotnet/
-export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
-export GOPATH=$HOME/.go
-export PATH=$HOME/.bin:$PATH
+# Manual SDK homes
+if [[ -d ~/.android ]]
+then
+	export ANDROID_HOME=${HOME}/.android/
+	export PATH="$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools"
+fi
+
+[ -d ~/.bin ] && export PATH="$HOME/.bin:$PATH"
+[ -d ~/.bin/jetbrains ] && export PATH="$PATH:$HOME/.bin/jetbrains"
+[ -d ~/go ] && export GOPATH="$HOME/go"
+[ -d /opt/dotnet ] && export DOTNET_ROOT="/opt/dotnet/"
 
 
 # Load aliases
-[ -s ~/.aliases ] && source ~/.aliases
+[ -s ~/dotfiles/.aliases ] && source ~/dotfiles/.aliases
 
 # Load secrets
-[ -s ~/.secrets ] && source ~/.secrets
+[ -s ~/dotfiles/.secrets ] && source ~/dotfiles/.secrets
 
 # Save lots of history
 HISTSIZE=10000               
@@ -48,9 +55,9 @@ setopt appendhistory
 setopt histignorealldups     
 setopt autocd
 zstyle ':completion:*' rehash true
-#zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 # Local mailservers are unlikely to be prod, don't annoy
 unset MAILCHECK
+
 
 
 # Unix timestamp to readable date
@@ -60,7 +67,7 @@ function ttd {
 
 # Temporary scratch dir
 function tempe () {
-  cd "$(mktemp -d)"
+  cd "$(mktemp -d /tmp/tmp.$(shuf -n 1 ~/dotfiles/wordlist).XXXX)"
   if [[ $# -eq 1 ]]; then
     \mkdir -p "$1"
     cd "$1"
@@ -68,7 +75,7 @@ function tempe () {
 }
 
 # Upload from CLI
-function transfer() { curl --progress-bar --upload-file "$1" https://transfer.sh/$1 && printf "\n"}
+function transfer() { curl --progress-bar --upload-file "$1" https://transfer.sh/$1 && printf "\n" }
 
 # Get me a gitignore
 gi() {
@@ -77,9 +84,6 @@ gi() {
 
 function goto() { cd $(dirname $1) }
 
-# Java version manager
-[ -s ~/.jabba/jabba.sh ] && source ~/.jabba/jabba.sh
-
 
 # Don't scale qt please
 export QT_AUTO_SCREEN_SCALE_FACTOR=0
@@ -87,19 +91,6 @@ export QT_STYLE_OVERRIDE=gtk
 export QT_SELECT=qt5
 export QT_SCALE_FACTOR=1
 export QT_AUTO
-
-# Set locale if unset
-if [[ $LANG = '' ]]; then
-	export LANG=en_US.UTF-8
-fi
-
-# Fix jetbrains history bug
-unset __INTELLIJ_COMMAND_HISTFILE__
-
-# Fast node manager
-export PATH=/home/joshua/.fnm:$PATH
-eval "`fnm env --multi`"
-
 
 # Color man pages
 export LESS_TERMCAP_mb=$'\E[01;32m'
@@ -114,11 +105,37 @@ export LESS=-r
 # fzf default ignore generated dirs
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}" 2> /dev/null'
 
-# initialize thefuck to help with common mistakes
-eval $(thefuck --alias)
+# Set locale if unset
+if [[ $LANG = '' ]]; then
+	export LANG=en_GB.UTF-8
+fi
 
-# web3j cli
-[ -s "$HOME/.web3j/source.sh" ] && source "$HOME/.web3j/source.sh"
+# Fix jetbrains history bug
+unset __INTELLIJ_COMMAND_HISTFILE__
 
-# solidity version manager
-[ -s "$HOME/.svm/svm.sh" ] && source "$HOME/.svm/svm.sh"
+
+# Initialize nodeJS
+if [[ -d ~/.fnm ]]
+then
+	export PATH="$HOME/.fnm:$PATH"
+	eval "`fnm env --multi`"
+	export NODE_REPL_HISTORY="$HOME/.node_history"
+fi
+
+#Initialize Java
+alias java="unalias java &>/dev/null ; unalias jabba &>/dev/null ; source ~/.jabba/jabba.sh ; java"
+alias jabba="unalias java &>/dev/null ; unalias jabba &>/dev/null ; source ~/.jabba/jabba.sh ; jabba"
+
+# Initialize Web3j
+[ -s ~/.web3j/source.sh ] && source ~/.web3j/source.sh
+
+# Initialize Solidity
+alias solc="unalias svm &>/dev/null ; unalias solc &>/dev/null ; source ~/.svm/svm.sh ; solc"
+alias svm="unalias svm &>/dev/null ; unalias solc &>/dev/null ; source ~/.svm/svm.sh ; svm"
+
+# Initialize thefuck to help with common mistakes
+#eval $(thefuck --alias)
+
+# ensure that on gnome terminals open to the same location as their parent
+[ -z "GNOME_TERMINAL_SERVICE" ] || source "/etc/profile.d/vte.sh"
+#zprof

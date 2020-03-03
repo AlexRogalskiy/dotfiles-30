@@ -1,0 +1,7 @@
+MichaelAquilina/zsh-you-should-use
+robbyrussell/oh-my-zsh
+robbyrussell/oh-my-zsh path:plugins/virtualenvwrapper
+robbyrussell/oh-my-zsh path:plugins/command-not-found
+agnoster/agnoster-zsh-theme agnoster
+zsh-users/zsh-syntax-highlighting
+zsh-users/zsh-autosuggestions
